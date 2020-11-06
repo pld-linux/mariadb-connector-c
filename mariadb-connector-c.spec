@@ -3,12 +3,12 @@
 #
 Summary:	The MariaDB Native Client library (C driver)
 Name:		mariadb-connector-c
-Version:	3.1.8
+Version:	3.1.11
 Release:	1
 License:	LGPL v2+
 Group:		Libraries
 Source0:	https://downloads.mariadb.org/interstitial/connector-c-%{version}/%{name}-%{version}-src.tar.gz
-# Source0-md5:	0beaee9a77f78a0bf37a1d91999643c6
+# Source0-md5:	cf9da5f0ac9ec72dd8309bdc1d1c6c2f
 Source2:	my.cnf
 Source3:	client.cnf
 URL:		http://mariadb.org/
@@ -68,7 +68,7 @@ present.
 %patch1 -p1
 
 # Remove unsused parts
-rm -r win zlib win-iconv examples
+rm -r win zlib win-iconv
 
 %build
 %cmake \
@@ -86,7 +86,7 @@ rm -r win zlib win-iconv examples
 	-DINSTALL_INCLUDEDIR="include/mysql" \
 	-DINSTALL_PLUGINDIR="%{_lib}/mariadb/plugin" \
 	-DINSTALL_PCDIR="%{_lib}/pkgconfig" \
-	-DWITH_UNITTEST=ON \
+	%{?with_tests:-DWITH_UNITTEST=ON} \
 	.
 
 %{__make}
